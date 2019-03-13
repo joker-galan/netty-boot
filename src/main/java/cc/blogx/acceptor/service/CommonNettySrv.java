@@ -1,6 +1,8 @@
 package cc.blogx.acceptor.service;
 
 import cc.blogx.handler.DefaultHttpHandler;
+import cc.blogx.handler.LoginFilterHandler;
+import cc.blogx.handler.SafeFilterHandler;
 import cc.blogx.util.NativeSupport;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -25,8 +27,9 @@ import java.util.concurrent.ThreadFactory;
 public class CommonNettySrv extends NettySrvAcceptor {
 
     private final static int DEFAULT_PORT = 9876;
-    private final HttpServerCodec codec = new HttpServerCodec();
-    private final HttpObjectAggregator aggregator = new HttpObjectAggregator(1024 * 1024);
+    private final SafeFilterHandler safe = new SafeFilterHandler();
+    private final DefaultHttpHandler http = new DefaultHttpHandler();
+    private final LoginFilterHandler login = new LoginFilterHandler();
 
     public CommonNettySrv() {
         super(new InetSocketAddress(DEFAULT_PORT));
@@ -49,7 +52,7 @@ public class CommonNettySrv extends NettySrvAcceptor {
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(codec, aggregator, new DefaultHttpHandler());
+                        ch.pipeline().addLast(new HttpServerCodec(), new HttpObjectAggregator(1024 * 1024), login, safe, http);
                     }
                 });
 

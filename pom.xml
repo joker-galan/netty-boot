@@ -10,7 +10,7 @@
 
     <properties>
         <netty.version>4.1.33.Final</netty.version>
-        <slf4j.version>1.7.5</slf4j.version>
+        <slf4j.version>1.7.26</slf4j.version>
     </properties>
 
 
@@ -23,10 +23,10 @@
 
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
+            <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
-        
+
     </dependencies>
 
 
