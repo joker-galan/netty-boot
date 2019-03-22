@@ -1,17 +1,19 @@
 package cc.blogx.handler;
 
+import cc.blogx.model.RequestHeaders;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.codec.http.HttpResponse;
 
 /**
  * @author XueYuan
  * @since 2019-03-12 21:08
  */
 @ChannelHandler.Sharable
-public class DefaultHttpHandler extends SimpleChannelInboundHandler {
+public class HttpRequestHandler extends SimpleChannelInboundHandler<RequestHeaders> {
 
-    protected void channelRead0(ChannelHandlerContext ctx, Object o) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, RequestHeaders headers) throws Exception {
 
     }
 

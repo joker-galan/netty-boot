@@ -1,7 +1,7 @@
 package cc.blogx.acceptor.service;
 
-import cc.blogx.handler.DefaultHttpHandler;
-import cc.blogx.handler.LoginFilterHandler;
+import cc.blogx.config.NettyConfig;
+import cc.blogx.handler.HttpRequestHandler;
 import cc.blogx.handler.SafeFilterHandler;
 import cc.blogx.util.NativeSupport;
 import io.netty.bootstrap.ServerBootstrap;
@@ -16,6 +16,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.concurrent.ThreadFactory;
@@ -28,8 +29,15 @@ public class CommonNettySrv extends NettySrvAcceptor {
 
     private final static int DEFAULT_PORT = 9876;
     private final SafeFilterHandler safe = new SafeFilterHandler();
-    private final DefaultHttpHandler http = new DefaultHttpHandler();
-    private final LoginFilterHandler login = new LoginFilterHandler();
+    private final HttpRequestHandler http = new HttpRequestHandler();
+
+    static {
+        try {
+            NettyConfig.getInstance();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public CommonNettySrv() {
         super(new InetSocketAddress(DEFAULT_PORT));
@@ -52,10 +60,9 @@ public class CommonNettySrv extends NettySrvAcceptor {
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(new HttpServerCodec(), new HttpObjectAggregator(1024 * 1024), login, safe, http);
+                        ch.pipeline().addLast(new HttpServerCodec(), new HttpObjectAggregator(1024 * 1024), safe, http);
                     }
                 });
-
 //        optionFactory();
         return boot.bind(localAddress);
     }

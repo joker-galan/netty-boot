@@ -9,6 +9,6 @@ import io.netty.util.AttributeKey;
  */
 public class AttributeMapConstant {
 
-    public static final AttributeKey<Channel> NETTY_CHANNEL_KEY = AttributeKey.valueOf("netty.channel");
+    public static final AttributeKey<Channel> NETTY_TOKEN_KEY = AttributeKey.valueOf("netty.token");
 
 }

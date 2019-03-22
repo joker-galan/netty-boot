@@ -9,6 +9,7 @@ import cc.blogx.acceptor.service.CommonNettySrv;
 public class SrvStart {
 
     public static void main(String[] args) throws Exception {
+
         CommonNettySrv nettySrvAcceptor = new CommonNettySrv();
         nettySrvAcceptor.start();
     }
