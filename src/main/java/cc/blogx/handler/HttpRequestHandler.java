@@ -7,6 +7,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.HttpResponse;
 
 /**
+ * 分发请求到指定服务
+ *
  * @author XueYuan
  * @since 2019-03-12 21:08
  */

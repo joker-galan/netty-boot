@@ -15,6 +15,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.util.internal.StringUtil;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -27,13 +28,16 @@ import java.util.concurrent.ThreadFactory;
  */
 public class CommonNettySrv extends NettySrvAcceptor {
 
-    private final static int DEFAULT_PORT = 9876;
+    private static int DEFAULT_PORT = 6515;
     private final SafeFilterHandler safe = new SafeFilterHandler();
     private final HttpRequestHandler http = new HttpRequestHandler();
 
     static {
         try {
             NettyConfig.getInstance();
+            if (!StringUtil.isNullOrEmpty(NettyConfig.getConfigByKey("netty.port"))) {
+                DEFAULT_PORT = Integer.valueOf(NettyConfig.getConfigByKey("netty.port"));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,7 +67,7 @@ public class CommonNettySrv extends NettySrvAcceptor {
                         ch.pipeline().addLast(new HttpServerCodec(), new HttpObjectAggregator(1024 * 1024), safe, http);
                     }
                 });
-//        optionFactory();
+        optionFactory();
         return boot.bind(localAddress);
     }
 

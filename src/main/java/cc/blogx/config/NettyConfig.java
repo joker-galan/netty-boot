@@ -1,6 +1,5 @@
 package cc.blogx.config;
 
-import cc.blogx.acceptor.service.NettySrvAcceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,10 +8,15 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
+ * 读取resources目录下的netty.properties配置
+ *
  * @author XueYuan.
  * @since 2019-03-22 15:43.
  */
 public class NettyConfig {
+
+    private NettyConfig() {
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(NettyConfig.class);
     private static final String NETTY_CONFIG = "netty.properties";
@@ -28,9 +32,6 @@ public class NettyConfig {
             }
         }
         return ourInstance;
-    }
-
-    private NettyConfig() {
     }
 
     private Properties prop;
