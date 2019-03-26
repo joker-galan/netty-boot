@@ -1,4 +1,4 @@
-package cc.blogx.acceptor.client;
+package cc.blogx.common.acceptor.client;
 
 /**
  * @author XueYuan

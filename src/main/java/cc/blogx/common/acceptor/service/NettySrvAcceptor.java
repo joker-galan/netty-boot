@@ -1,4 +1,4 @@
-package cc.blogx.acceptor.service;
+package cc.blogx.common.acceptor.service;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBufAllocator;
@@ -86,6 +86,8 @@ public abstract class NettySrvAcceptor implements SrvAcceptor {
     protected abstract ChannelFuture bind(SocketAddress localAddress);
 
     protected abstract void optionFactory();
+
+
 
 
 }

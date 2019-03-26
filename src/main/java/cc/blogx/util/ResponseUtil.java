@@ -1,7 +1,6 @@
 package cc.blogx.util;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaderNames;

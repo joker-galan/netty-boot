@@ -1,4 +1,4 @@
-package cc.blogx.acceptor.service;
+package cc.blogx.common.acceptor.service;
 
 /**
  * @author XueYuan
@@ -11,4 +11,6 @@ public interface SrvAcceptor {
     void start(boolean sync) throws Exception;
 
     void shutdown();
+
+    void httpSrvLoading(Class cls);
 }

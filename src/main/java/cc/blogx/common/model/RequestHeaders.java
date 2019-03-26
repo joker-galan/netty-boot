@@ -1,4 +1,4 @@
-package cc.blogx.model;
+package cc.blogx.common.model;
 
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.util.CharsetUtil;

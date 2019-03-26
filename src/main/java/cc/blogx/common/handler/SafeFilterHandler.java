@@ -1,8 +1,8 @@
-package cc.blogx.handler;
+package cc.blogx.common.handler;
 
 import cc.blogx.config.NettyConfig;
 import cc.blogx.constant.AttrConstant;
-import cc.blogx.model.RequestHeaders;
+import cc.blogx.common.model.RequestHeaders;
 import cc.blogx.util.ResponseUtil;
 import cc.blogx.util.ResultUtil;
 import io.netty.channel.ChannelHandler;

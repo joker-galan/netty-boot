@@ -1,10 +1,9 @@
-package cc.blogx.handler;
+package cc.blogx.common.handler;
 
-import cc.blogx.model.RequestHeaders;
+import cc.blogx.common.model.RequestHeaders;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.codec.http.HttpResponse;
 
 /**
  * 分发请求到指定服务

@@ -7,11 +7,10 @@ import java.lang.annotation.Target;
 
 /**
  * @author XueYuan
- * @since 2019-02-28 20:40
+ * @since 2019-03-26 19:06
  */
-@Deprecated
 @Retention(value = RetentionPolicy.RUNTIME)
-@Target(value = ElementType.ANNOTATION_TYPE)
-public @interface RequestMapper {
+@Target(value = ElementType.TYPE)
+public @interface ScanMapper {
     String value() default "";
 }

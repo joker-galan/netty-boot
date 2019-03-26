@@ -1,8 +1,9 @@
-package cc.blogx.acceptor.service;
+package cc.blogx.common.acceptor.service;
 
+import cc.blogx.annotation.ScanMapper;
 import cc.blogx.config.NettyConfig;
-import cc.blogx.handler.HttpRequestHandler;
-import cc.blogx.handler.SafeFilterHandler;
+import cc.blogx.common.handler.HttpRequestHandler;
+import cc.blogx.common.handler.SafeFilterHandler;
 import cc.blogx.util.NativeSupport;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -16,8 +17,11 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.util.internal.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.concurrent.ThreadFactory;
@@ -28,6 +32,7 @@ import java.util.concurrent.ThreadFactory;
  */
 public class CommonNettySrv extends NettySrvAcceptor {
 
+    private static final Logger logger = LoggerFactory.getLogger(CommonNettySrv.class);
     private static int DEFAULT_PORT = 6515;
     private final SafeFilterHandler safe = new SafeFilterHandler();
     private final HttpRequestHandler http = new HttpRequestHandler();
@@ -48,9 +53,21 @@ public class CommonNettySrv extends NettySrvAcceptor {
         super.init();
     }
 
+    public CommonNettySrv(Class cls) {
+        super(new InetSocketAddress(DEFAULT_PORT));
+        super.init();
+        this.httpSrvLoading(cls);
+    }
+
     public CommonNettySrv(int port) {
         super(new InetSocketAddress(port));
         super.init();
+    }
+
+    public CommonNettySrv(int port, Class cls) {
+        super(new InetSocketAddress(port));
+        super.init();
+        this.httpSrvLoading(cls);
     }
 
     protected EventLoopGroup initEventLoopGroup(int threadNum, ThreadFactory factory) {
@@ -129,5 +146,18 @@ public class CommonNettySrv extends NettySrvAcceptor {
                  * TCP四次握手关闭连接的时候，step2-step3中出现的状态
                  */
                 .childOption(ChannelOption.ALLOW_HALF_CLOSURE, false);
+    }
+
+    public void httpSrvLoading(Class cls) {
+        logger.info("loading annotation");
+        if (cls.isAnnotationPresent(ScanMapper.class)) {
+            scanMapperLoading(cls.getAnnotation(ScanMapper.class));
+        }
+    }
+
+    private void scanMapperLoading(Annotation annotation) {
+        ScanMapper scanMapper = (ScanMapper) annotation;
+        String scanPackName = scanMapper.value();
+
     }
 }
