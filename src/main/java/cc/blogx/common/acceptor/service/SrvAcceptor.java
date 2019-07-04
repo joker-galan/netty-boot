@@ -12,5 +12,5 @@ public interface SrvAcceptor {
 
     void shutdown();
 
-    void httpSrvLoading(Class cls);
+    void httpSrvLoading();
 }

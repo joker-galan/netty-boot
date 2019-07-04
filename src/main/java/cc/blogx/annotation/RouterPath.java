@@ -10,9 +10,9 @@ import java.lang.annotation.Target;
  * @since 2019-02-28 20:40
  */
 @Retention(value = RetentionPolicy.RUNTIME)
-@Target(value = ElementType.TYPE)
-public @interface RequestPath {
-    String value() default "";
-    String post() default "";
+@Target({ElementType.METHOD, ElementType.TYPE})
+public @interface RouterPath {
+    String url() default "";
 
+    String mothod() default "";
 }

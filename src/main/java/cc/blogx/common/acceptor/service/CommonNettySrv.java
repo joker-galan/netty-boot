@@ -1,9 +1,8 @@
 package cc.blogx.common.acceptor.service;
 
-import cc.blogx.annotation.ScanMapper;
-import cc.blogx.config.NettyConfig;
 import cc.blogx.common.handler.HttpRequestHandler;
 import cc.blogx.common.handler.SafeFilterHandler;
+import cc.blogx.config.NettyConfig;
 import cc.blogx.util.NativeSupport;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -21,7 +20,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.concurrent.ThreadFactory;
@@ -48,26 +46,17 @@ public class CommonNettySrv extends NettySrvAcceptor {
         }
     }
 
-    public CommonNettySrv() {
-        super(new InetSocketAddress(DEFAULT_PORT));
-        super.init();
-    }
-
     public CommonNettySrv(Class cls) {
         super(new InetSocketAddress(DEFAULT_PORT));
-        super.init();
-        this.httpSrvLoading(cls);
-    }
-
-    public CommonNettySrv(int port) {
-        super(new InetSocketAddress(port));
+        super.setMAIN_CLASS(cls.getName());
         super.init();
     }
 
     public CommonNettySrv(int port, Class cls) {
         super(new InetSocketAddress(port));
+        super.setMAIN_CLASS(cls.getName());
         super.init();
-        this.httpSrvLoading(cls);
+
     }
 
     protected EventLoopGroup initEventLoopGroup(int threadNum, ThreadFactory factory) {
@@ -148,16 +137,4 @@ public class CommonNettySrv extends NettySrvAcceptor {
                 .childOption(ChannelOption.ALLOW_HALF_CLOSURE, false);
     }
 
-    public void httpSrvLoading(Class cls) {
-        logger.info("loading annotation");
-        if (cls.isAnnotationPresent(ScanMapper.class)) {
-            scanMapperLoading(cls.getAnnotation(ScanMapper.class));
-        }
-    }
-
-    private void scanMapperLoading(Annotation annotation) {
-        ScanMapper scanMapper = (ScanMapper) annotation;
-        String scanPackName = scanMapper.value();
-
-    }
 }

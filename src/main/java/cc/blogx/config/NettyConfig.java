@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * 读取resources目录下的netty.properties配置
@@ -55,16 +56,22 @@ public class NettyConfig {
         InputStream inputStream = null;
         Properties prop = new Properties();
         try {
-            logger.info("loading property file '" + NETTY_CONFIG + "'");
+            logger.info("loading property file '{}'", NETTY_CONFIG);
             inputStream = NettyConfig.class.getClassLoader().getResourceAsStream(NETTY_CONFIG);
             if (inputStream != null) {
                 prop.load(inputStream);
+                if (logger.isDebugEnabled()) {
+                    Set<Object> keys = prop.keySet();
+                    keys.forEach(obj -> {
+                        logger.debug("{}: {}", obj, prop.get(obj));
+                    });
+                }
             } else {
-                logger.warn("property file '" + NETTY_CONFIG + "' not found in the classpath");
+                logger.warn("property file '{}' not found in the classpath", NETTY_CONFIG);
             }
             return prop;
         } catch (Exception e) {
-            logger.error("loading property file  '" + NETTY_CONFIG + "' find error , error message is :" + e.getMessage());
+            logger.error("loading property file  '{}' find error , error message is :{}", NETTY_CONFIG, e.getMessage());
             return prop;
         } finally {
             if (null != inputStream) {

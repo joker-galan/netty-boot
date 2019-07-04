@@ -7,10 +7,13 @@ import java.lang.annotation.Target;
 
 /**
  * @author XueYuan
- * @since 2019-03-26 19:06
+ * @since 2019-03-26 19:17
  */
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.TYPE)
-public @interface ScanMapper {
-    String value() default "";
+public @interface Router {
+
+    String url() default "";
+
+    String mothod() default "";
 }

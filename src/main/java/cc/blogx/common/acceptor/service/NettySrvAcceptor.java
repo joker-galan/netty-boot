@@ -1,5 +1,9 @@
 package cc.blogx.common.acceptor.service;
 
+import cc.blogx.annotation.ScanPack;
+import cc.blogx.common.model.RouterMapper;
+import cc.blogx.config.RouterMapperFactory;
+import cc.blogx.util.ClassUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.PooledByteBufAllocator;
@@ -11,7 +15,10 @@ import io.netty.util.internal.PlatformDependent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.annotation.Annotation;
 import java.net.SocketAddress;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ThreadFactory;
 
 /**
@@ -30,6 +37,7 @@ public abstract class NettySrvAcceptor implements SrvAcceptor {
     private int workers;
     protected volatile ByteBufAllocator allocator;
     protected final SocketAddress localAddress;
+    private String MAIN_CLASS;
 
 
     public NettySrvAcceptor(SocketAddress localAddress) {
@@ -42,6 +50,8 @@ public abstract class NettySrvAcceptor implements SrvAcceptor {
     }
 
     public void init() {
+        this.httpSrvLoading();
+
         ThreadFactory bossFactory = new DefaultThreadFactory("netty.acceptor.boss");
         ThreadFactory workerFactory = new DefaultThreadFactory("netty.acceptor.worker");
 
@@ -87,7 +97,35 @@ public abstract class NettySrvAcceptor implements SrvAcceptor {
 
     protected abstract void optionFactory();
 
+    @Override
+    public void httpSrvLoading() {
+        logger.info("loading annotation");
+        try {
+            Class clazz = Class.forName(MAIN_CLASS);
+            if (null != clazz) {
+                if (clazz.isAnnotationPresent(ScanPack.class)) {
+                    Annotation annotation = clazz.getAnnotation(ScanPack.class);
+                    if (null != annotation) {
+                        ScanPack scanPack = (ScanPack) annotation;
+                        Set<String> classes = ClassUtil.getClassName(scanPack.value());
+                        RouterMapperFactory.build(classes);
+                    }
+                }
+                /*else {
+                    String mainClass = clazz.getName();
+                    String[] arr = mainClass.split(".");
+                    if (arr.length > 1) {
+                        Set<String> classes = ClassUtil.getClassName(mainClass);
+                        System.out.println(classes != null ? classes.toString() : 0);
+                    }
+                }*/
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
-
-
+    public void setMAIN_CLASS(String MAIN_CLASS) {
+        this.MAIN_CLASS = MAIN_CLASS;
+    }
 }

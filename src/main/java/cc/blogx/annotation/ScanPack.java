@@ -7,9 +7,10 @@ import java.lang.annotation.Target;
 
 /**
  * @author XueYuan
- * @since 2019-03-26 19:17
+ * @since 2019-03-26 19:06
  */
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.TYPE)
-public @interface Service {
+public @interface ScanPack {
+    String value();
 }
