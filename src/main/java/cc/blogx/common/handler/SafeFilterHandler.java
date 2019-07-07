@@ -1,6 +1,6 @@
 package cc.blogx.common.handler;
 
-import cc.blogx.config.NettyConfig;
+import cc.blogx.factory.NettyConfig;
 import cc.blogx.constant.AttrConstant;
 import cc.blogx.common.model.RequestHeaders;
 import cc.blogx.util.ResponseUtil;

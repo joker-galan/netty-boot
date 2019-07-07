@@ -1,4 +1,4 @@
-package cc.blogx.config;
+package cc.blogx.factory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

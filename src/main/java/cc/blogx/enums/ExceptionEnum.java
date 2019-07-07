@@ -1,4 +1,4 @@
-package cc.blogx.exception;
+package cc.blogx.enums;
 
 /**
  * @author XueYuan

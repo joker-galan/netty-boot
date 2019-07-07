@@ -1,14 +1,17 @@
 package cc.blogx.service;
 
 import cc.blogx.annotation.Router;
-import cc.blogx.annotation.RouterPath;
+import cc.blogx.annotation.Mapping;
+import cc.blogx.enums.RouterMethod;
 import cc.blogx.exception.WebInitException;
 
 @Router
-@RouterPath(value = "/test")
+@Mapping(url = "/test")
 public class TestApi {
 
-    @RouterPath(value = "/aaa")
+
+
+    @Mapping(url = "/aaa", method = RouterMethod.POST)
     public String test(String abc, WebInitException a) {
         return "123";
     }

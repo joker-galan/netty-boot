@@ -1,5 +1,7 @@
 package cc.blogx.exception;
 
+import cc.blogx.enums.ExceptionEnum;
+
 /**
  * web请求路径映射异常
  *

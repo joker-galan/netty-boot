@@ -12,8 +12,4 @@ import java.lang.annotation.Target;
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.TYPE)
 public @interface Router {
-
-    String url() default "";
-
-    String mothod() default "";
 }

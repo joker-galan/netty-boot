@@ -4,16 +4,16 @@ import java.util.List;
 
 public class RouterMapper {
 
-    private String path;
+    private String url;
     private String method;
     private List<String> params;
 
-    public String getPath() {
-        return path;
+    public String getUrl() {
+        return url;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getMethod() {

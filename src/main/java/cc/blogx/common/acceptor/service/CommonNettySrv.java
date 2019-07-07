@@ -2,7 +2,7 @@ package cc.blogx.common.acceptor.service;
 
 import cc.blogx.common.handler.HttpRequestHandler;
 import cc.blogx.common.handler.SafeFilterHandler;
-import cc.blogx.config.NettyConfig;
+import cc.blogx.factory.NettyConfig;
 import cc.blogx.util.NativeSupport;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
